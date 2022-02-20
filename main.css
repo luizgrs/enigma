@@ -26,17 +26,27 @@ main {
     height: calc(100vh - var(--header-height));
     display: flex;
     flex-flow: column;
+    padding: 0 10px;
+}
+
+dialog {
+    font-size: 3rem;
+}
+
+dialog input, dialog button {
+    font-size: 1.5rem;
 }
 
 #guesses {
     flex: 60% 0 0;
     min-width: 5em;
+    padding: 0 10px;
 }
 
 .guess {
     height: 16.6667%;
     box-sizing: border-box;
-    padding: 10px 0;
+    padding: 10px 10px;
     display: flex;
     justify-content: space-between;
 }
@@ -99,4 +109,9 @@ main {
     max-width: 10vw;
     padding: 0 4px;
     margin: 0 1px;
+}
+
+#gameLink {
+    max-width: 90vw;
+    width: 600px;
 }
