@@ -1,0 +1,102 @@
+:root {
+    --header-height: 40px;
+}
+
+body {
+    background-color: dimgrey;
+    font-family: 'Roboto Mono', monospace;
+    color: gainsboro;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 10vh;
+    align-items: center;
+}
+
+header {
+    height: var(--header-height);
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 36px;
+}
+
+main {
+    height: calc(100vh - var(--header-height));
+    display: flex;
+    flex-flow: column;
+}
+
+#guesses {
+    flex: 60% 0 0;
+    min-width: 5em;
+}
+
+.guess {
+    height: 16.6667%;
+    box-sizing: border-box;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.error {
+    background-color: #000;
+    color: #FFF;
+}
+
+.almost {
+    background-color: #bdae0a;
+    color: #ffec1b;
+}
+
+
+.success {
+    color: greenyellow;
+    background-color: seagreen;
+}
+
+
+.char {
+    display: inline-block;
+    font-size: calc(100% - 20px);
+    width: .8em;
+    height: 100%;
+    list-style: none;
+    border: 1px solid #FFF;
+    text-align: center;
+}
+
+#keyboard {
+    display: flex;
+    flex-flow: column;
+    align-content: flex-start;
+    align-items: center;
+    flex-basis: auto;
+    flex: auto;
+}
+
+#keyboard > div {
+    margin: 5px 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#keyboard button.enter {
+    font-size: 16%;
+}
+
+#keyboard .error {
+    opacity: .3;
+}
+
+
+#keyboard button {
+    font-size: 32%;
+    min-width: 34px;
+    max-width: 10vw;
+    padding: 0 4px;
+    margin: 0 1px;
+}

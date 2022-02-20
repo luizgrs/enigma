@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Enigma</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="main.css">
+  <script src="main.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Enigma</h1>
+  </header>
+  <main>
+    <section id="guesses">
+      <div class="guess">
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+      </div>
+      <div class="guess">
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+      </div>
+      <div class="guess">
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+      </div>
+      <div class="guess">
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+      </div>
+      <div class="guess">
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+      </div>
+      <div class="guess">
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+        <span class="char"></span>
+      </div>
+    </section>
+    <section id="keyboard">
+      
+    </section>
+  </main>
+  <dialog id="newGameDialog">
+    <p>Qual deve ser a palavra secreta?</p>
+    <input type="text" id="newWord" />
+    <button id="newGameButton">Criar</button>
+  </dialog>
+  <dialog id="newGameShareDialog">
+    <p>
+      Compartilhe este link para que tentem adivinhá-la
+    </p>
+    <input type="text" readonly id="gameLink" />
+    <div>
+      <button id="copyLink">Copy</button>
+      <button id="shareLink">Share</button>
+    </div>
+    
+    </form>
+  </dialog>  
+</body>
+
+</html>
