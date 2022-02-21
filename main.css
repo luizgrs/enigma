@@ -30,11 +30,23 @@ main {
 }
 
 dialog {
-    font-size: 3rem;
+    font-size: 2rem;
+}
+
+dialog p {
+    margin-bottom: 15px;
+}
+
+dialog::backdrop {
+    background-color: rgba(65, 65, 65, 0.8);
 }
 
 dialog input, dialog button {
-    font-size: 1.5rem;
+    font-size: 70%;
+}
+
+dialog input {
+    max-width: 75vw;
 }
 
 #guesses {
@@ -109,9 +121,4 @@ dialog input, dialog button {
     max-width: 10vw;
     padding: 0 4px;
     margin: 0 1px;
-}
-
-#gameLink {
-    max-width: 90vw;
-    width: 600px;
 }

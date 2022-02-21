@@ -68,9 +68,11 @@
     </section>
   </main>
   <dialog id="newGameDialog">
-    <p>Qual deve ser a palavra secreta?</p>
-    <input type="text" id="newWord" />
-    <button id="newGameButton">Criar</button>
+    <form id="newGameForm">
+      <p>Qual deve ser a palavra secreta?</p>
+      <input type="text" id="newWord" maxlength="5" />
+      <button id="newGameButton" type="submit">Criar</button>
+    </form>
   </dialog>
   <dialog id="newGameShareDialog">
     <p>

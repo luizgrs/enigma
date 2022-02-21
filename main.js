@@ -216,26 +216,35 @@ function el(tag, textOrattrs, attrs){
 }
 
 function createNewGame(){
-    $id('newGameButton').addEventListener('click', createLink);
+    $id('newGameForm').addEventListener('submit', e => {
+        e.preventDefault();
+        createLink();
+    });
     $id('newGameDialog').showModal();
 }
 
 function createLink(){
     const word = $id('newWord').value.trim();
     if(word){
-        const link = document.location.origin + document.location.pathname + '?' + btoa(word);        
-        $id('gameLink').value = link;   
-        $id('copyLink').addEventListener('click', () => {
-            navigator.clipboard.writeText(link);
-        });
-        $id('shareLink').addEventListener('click', () => {
-            navigator.share({
-                url: link
+        if(word.length != 5)
+            alert('A palavra deve ter 5 letras');
+        else {    
+            const link = document.location.origin + document.location.pathname + '?' + btoa(word);        
+            const linkBox = $id('gameLink');
+            linkBox.value = link;   
+            linkBox.select();
+            $id('copyLink').addEventListener('click', () => {
+                navigator.clipboard.writeText(link);
             });
-        });
+            $id('shareLink').addEventListener('click', () => {
+                navigator.share({
+                    url: link
+                });
+            });
 
-        $id('newGameDialog').close();
-        $id('newGameShareDialog').showModal();
+            $id('newGameDialog').close();
+            $id('newGameShareDialog').showModal();
+        }
     }
 }
 
