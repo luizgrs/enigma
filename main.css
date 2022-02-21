@@ -31,6 +31,8 @@ main {
 
 dialog {
     font-size: 2rem;
+    width: 100%;
+    box-sizing: content-box;
 }
 
 dialog p {

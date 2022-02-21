@@ -11,8 +11,12 @@ class Game {
     #canEvaluate = false;
     #gameEnd = true;
 
-    get #guessSelector(){
-        return `#guesses .guess:nth-child(${this.#currentGuess})`;
+    get #currentGuessSelector(){
+        return this.#guessSelector(this.#currentGuess);
+    }
+
+    #guessSelector(guessPos) {
+        return `#guesses .guess:nth-child(${guessPos})`;
     }
 
     get #currentGuessCharDom(){
@@ -20,7 +24,7 @@ class Game {
     }
 
     #guessCharDom(charPos){
-        return $(`${this.#guessSelector} .char:nth-child(${charPos})`);
+        return $(`${this.#currentGuessSelector} .char:nth-child(${charPos})`);
     }
 
     constructor(){
@@ -43,10 +47,6 @@ class Game {
             this.#currentChar = 1;
             this.#currentGuess++;
         }
-        else{ 
-            this.#gameEnd = true;
-            this.#canGuess = false;
-        }
     }
 
     guess(char){
@@ -63,12 +63,16 @@ class Game {
 
     evaluateGuess(){
         if(this.#canEvaluate){
-            const guessWord = $(this.#guessSelector).innerText.replaceAll(/\W/g, "");
+            this.#canEvaluate = false;
+
+            const guessWord = $(this.#currentGuessSelector).innerText.replaceAll(/\W/g, "");
             let correctPositions = 0;
+
             for(let charPos=0;charPos < guessWord.length;charPos++){
                 const guessChar = guessWord[charPos];
                 const secretChar = this.#secretWord[charPos];
                 const charDomClasses = this.#guessCharDom(charPos+1).classList;
+
                 if(guessChar === secretChar){
                     this.#keyBoard.setSuccessKey(guessChar);
                     correctPositions++
@@ -83,7 +87,13 @@ class Game {
                     charDomClasses.add('error');
                 }
             }
-            this.#newGuessTry();
+
+            if(correctPositions === this.#wordSize)
+                this.#endGame(true);
+            else if(this.#currentGuess === this.#maxGuesses)
+                this.#endGame(false);
+            else
+                this.#newGuessTry();
         }
     }
 
@@ -95,6 +105,55 @@ class Game {
             this.#canEvaluate = false;
             this.#canGuess = true;
         }
+    }
+
+    #createResultMessage(){
+        let message = "";
+        for(let x = 1; x <= this.#currentGuess; x++){
+            if(x > 1)
+                message += "\r\n";
+
+            $all(`${this.#guessSelector(x)} .char`).forEach(guess => {
+                const classList = guess.classList;
+                if(classList.contains('success'))
+                    message += "🟩";
+                else if(classList.contains('almost'))
+                    message += "🟨";
+                else
+                    message += "🟥";
+            });
+        }
+        
+        message += "\r\n\r\n";
+        message += "Tente também em " + document.location.href;
+
+        return message;
+    }
+
+    #shareResult(){
+        navigator.share({
+            text: this.#createResultMessage()
+        });
+    }
+
+    #copyResult(){
+        navigator.clipboard.writeText(this.#createResultMessage());
+    }
+
+    #endGame(win){
+        this.#gameEnd = true;
+        this.#canGuess = false;
+
+        const dialog = $id('gameEndDialog');
+        const message = $('p', dialog);
+        if(win)
+            txt(message, "Você Acertou!");
+        else
+            txt(message, "Você não conseguiu, a palavra era {0}".replace("{0}", this.#secretWord));
+
+        $id('shareResultButton').addEventListener('click', () => this.#shareResult());
+        $id('copyResultButton').addEventListener('click', () => this.#copyResult());
+        dialog.showModal();
     }
 }
 
@@ -181,8 +240,12 @@ function $id(id){
     return document.getElementById(id);
 }
 
-function $(selector){
-    return document.querySelector(selector);
+function $(selector, context){
+    return (context || document).querySelector(selector);
+}
+
+function $all(selector){
+    return document.querySelectorAll(selector);
 }
 
 
