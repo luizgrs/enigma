@@ -125,7 +125,7 @@ class Game {
         }
         
         message += "\r\n\r\n";
-        message += "Tente também em " + document.location.href;
+        message += res("tryToo").replace("{0}", document.location.href);
 
         return message;
     }
@@ -147,12 +147,17 @@ class Game {
         const dialog = $id('gameEndDialog');
         const message = $('p', dialog);
         if(win)
-            txt(message, "Você Acertou!");
+            txt(message, res("win"));
         else
-            txt(message, "Você não conseguiu, a palavra era {0}".replace("{0}", this.#secretWord));
+            txt(message, res("lose").replace("{0}", this.#secretWord));
 
-        $id('shareResultButton').addEventListener('click', () => this.#shareResult());
-        $id('copyResultButton').addEventListener('click', () => this.#copyResult());
+        const shareButton = $id('shareResultButton');
+        txt(shareButton, res('share'));
+        shareButton.addEventListener('click', () => this.#shareResult());
+        
+        const copyButton = $id('copyResultButton');
+        txt(copyButton, res('copy'));
+        copyButton.addEventListener('click', () => this.#copyResult());
         dialog.showModal();
     }
 }
@@ -283,6 +288,8 @@ function createNewGame(){
         e.preventDefault();
         createLink();
     });
+    txt($id('wordInputLabel'), res('wordInputLabel'));
+    txt($id('newGameButton'), res('createGame'));
     $id('newGameDialog').showModal();
 }
 
@@ -290,16 +297,23 @@ function createLink(){
     const word = $id('newWord').value.trim();
     if(word){
         if(word.length != 5)
-            alert('A palavra deve ter 5 letras');
-        else {    
+            alert(res("tooShort"));
+        else {   
+            txt($id('newGameMessage'), res('newGameMessage'));
             const link = document.location.origin + document.location.pathname + '?' + btoa(word);        
             const linkBox = $id('gameLink');
             linkBox.value = link;   
             linkBox.select();
-            $id('copyLink').addEventListener('click', () => {
+            
+            const copyButton = $id('copyLink');
+            txt(copyButton, res('copy'));
+            copyButton.addEventListener('click', () => {
                 navigator.clipboard.writeText(link);
             });
-            $id('shareLink').addEventListener('click', () => {
+
+            const shareButton = $id('shareLink');
+            txt(shareButton, res(`share`));
+            shareButton.addEventListener('click', () => {
                 navigator.share({
                     url: link
                 });
@@ -311,7 +325,50 @@ function createLink(){
     }
 }
 
+let currentResources;
+function res(key){ return currentResources[key] || key; }
+
+function defineLanguage(){
+    const resources = {
+        "pt": {
+            "wordInputLabel": "Qual deve ser a palavra secreta?",
+            "newGameMessage": "Compartilhe este link para que tentem adivinhá-la",
+            "createGame": "Criar",
+            "copy": "Copiar",
+            "share": "Compartilhar",
+            "win": "Você Acertou!",
+            "lose": "Você não conseguiu, a palavra era {0}",
+            "tryToo": "Tente também em {0}",
+            "tooShort": 'A palavra deve ter 5 letras'
+        },
+        "en": {
+            "wordInputLabel": "What is the secret word?",
+            "newGameMessage": "Share this link for other try guess it",
+            "createGame": "Create",
+            "copy": "Copy",
+            "share": "Share",
+            "win": "You won!",
+            "lose": "You failed, the word was {0}",
+            "tryToo": "Try too {0}",
+            "tooShort": 'Word must be 5 characters long'
+        }
+    };
+
+    var language = navigator.language.toLowerCase();
+    while(!currentResources && language){
+        currentResources = resources[language];
+
+        if(!currentResources)
+            language = language.substr(0, language.lastIndexOf("-"))
+    }
+
+    if(!currentResources)
+        currentResources = resources["en"];
+}
+
 function init(){
+    defineLanguage();
+
     let word;
     if(document.location.search)
         word = atob(document.location.search.substr(1));
@@ -327,3 +384,4 @@ function onload(fn){
 }
 
 onload(init);
+

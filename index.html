@@ -69,27 +69,25 @@
   </main>
   <dialog id="newGameDialog">
     <form id="newGameForm">
-      <p>Qual deve ser a palavra secreta?</p>
+      <p id="wordInputLabel"></p>
       <input type="text" id="newWord" maxlength="5" />
-      <button id="newGameButton" type="submit">Criar</button>
+      <button id="newGameButton" type="submit"></button>
     </form>
   </dialog>
   <dialog id="newGameShareDialog">
-    <p>
-      Compartilhe este link para que tentem adivinhá-la
-    </p>
+    <p id="newGameMessage"></p>
     <input type="text" readonly id="gameLink" />
     <div>
-      <button id="copyLink">Copy</button>
-      <button id="shareLink">Share</button>
+      <button id="copyLink"></button>
+      <button id="shareLink"></button>
     </div>
     
     </form>
   </dialog>  
   <dialog id="gameEndDialog">
       <p id="gameEndMessage"></p>
-      <button id="copyResultButton">Copy</button>
-      <button id="shareResultButton" type="submit">Share</button>
+      <button id="copyResultButton"></button>
+      <button id="shareResultButton" type="submit"></button>
     </form>
   </dialog>  
 </body>
