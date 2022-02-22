@@ -158,6 +158,11 @@ class Game {
         const copyButton = $id('copyResultButton');
         txt(copyButton, res('copy'));
         copyButton.addEventListener('click', () => this.#copyResult());
+
+        const createButton = $id('createMineButton');
+        txt(createButton, res("createYours"));
+        createButton.addEventListener('click', () => document.location = document.location.origin + document.location.pathname);
+
         dialog.showModal();
     }
 }
@@ -339,7 +344,9 @@ function defineLanguage(){
             "win": "Você Acertou!",
             "lose": "Você não conseguiu, a palavra era {0}",
             "tryToo": "Tente também em {0}",
-            "tooShort": 'A palavra deve ter 5 letras'
+            "tooShort": 'A palavra deve ter 5 letras',
+            "newGame": "Criar",
+            "createYours": "Criar Meu Jogo"
         },
         "en": {
             "wordInputLabel": "What is the secret word?",
@@ -350,7 +357,9 @@ function defineLanguage(){
             "win": "You won!",
             "lose": "You failed, the word was {0}",
             "tryToo": "Try too {0}",
-            "tooShort": 'Word must be 5 characters long'
+            "tooShort": 'Word must be 5 characters long',
+            "newGame": "New",
+            "createYours": "Create Mine"
         }
     };
 
@@ -368,6 +377,8 @@ function defineLanguage(){
 
 function init(){
     defineLanguage();
+
+    txt($id('newLink'), res('newGame'));
 
     let word;
     if(document.location.search)

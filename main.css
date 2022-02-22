@@ -15,6 +15,15 @@ body {
 
 header {
     height: var(--header-height);
+    width: 100%;
+    text-align: center;
+}
+
+#newLink {
+    position: absolute;
+    font-size: 1rem;
+    right: 10px;
+    top: 16px;
 }
 
 h1 {
